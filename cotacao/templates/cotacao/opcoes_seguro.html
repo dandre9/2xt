@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>Cotação Seguro Viagem</title>
+  {% load staticfiles %}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'cotacao/style.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<!-- Cartões de seguro -->
+<div class="cards" style="margin: 5px;">
+  {% for i in cotacoes %}
+  <div class="card" style="float: left; width: 25rem; height: 30rem; margin: 10px; padding-bottom: 10px;">
+    <div class="container">
+      <h4 style="width: 22rem;"><b>{{i.produto}}</b></h4>
+      <h6><b>{{i.provedor}}</b></h6><br>
+      <p style="font-size:12px; width: 22rem;">{{i.beneficio1}} - <br>{{i.cobertura1}}<br>
+      {{i.beneficio2}} - <br>{{i.cobertura2}}<br></p>
+      <h3 class="card-title">R${{i.preco_adulto}}</h3>
+      <form action="{% url 'cotacao:compra' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="dados_compra" value="{{i.provedor}};{{i.produto}};{{i.preco_adulto}};{{i.codigo}}">
+        <input type="submit" class="btn btn-primary" value="Comprar">
+        <a type="button" style="margin-left: 70px;" class="btn" data-toggle="modal" data-target="#myModal">Detalhe</a>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Detalhe</h4>
+        </div>
+        <div class="modal-body">
+          <p>Despesa Médica Hospitalar - Essa cobertura consiste na indenização, por meio de reembolso das despesas ou da prestação de serviços, limitada ao valor do Capital Segurado contratado, das despesas médicas e/ou hospitalares efetuadas pelo Segurado para seu tratamento, sob orientação médica, ocasionado por acidente pessoal ou enfermidade súbita e aguda ocorrida durante o período de viagem e uma vez constatada a sua saída de sua cidade de domicílio, com um deslocamento superior a 100 km (cem quilômetros) no caso de viagens terrestres. Consulte as Condições Gerais da Seguradora Contratada.</p>
+          <p>Seguro de Bagagem Extraviada - Consiste no pagamento de uma indenização complementar ou suplementar ao valor da indenização já paga ao Segurado pela Companhia Aérea responsável pelo transporte. Consulte as Condições Gerais da Seguradora Contratada.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
