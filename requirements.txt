@@ -3,7 +3,7 @@ chardet==3.0.4
 colorama==0.3.9
 decorator==4.1.2
 django==2.0.1
-djangorestframework==3.7.7
+djangorestframework==3.9.1
 idna==2.6
 ipdb==0.10.3
 ipython==6.2.1
